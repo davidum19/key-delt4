@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Delta Key • Bypass Directo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    body { background: linear-gradient(to bottom, #0a0a0a, #1a1a1a); }
+    .glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); }
+  </style>
+</head>
+<body class="min-h-screen text-white flex items-center justify-center p-4">
+  <div class="max-w-xl w-full glass rounded-3xl border border-white/10 shadow-2xl p-10">
+    <div class="flex items-center justify-center gap-3 mb-8">
+      <i class="fa-solid fa-key text-5xl text-emerald-400"></i>
+      <h1 class="text-4xl font-bold">Mi Delta Key</h1>
+    </div>
+
+    <p class="text-center text-emerald-300 mb-8">Pega el link que te da Delta ("Receive Key")</p>
+
+    <input id="deltaLink" type="text" placeholder="https://auth.platorelay.com/..." 
+           class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-5 text-lg focus:outline-none focus:border-emerald-400 mb-6">
+
+    <button onclick="getKey()" 
+            class="w-full bg-emerald-500 hover:bg-emerald-600 text-black font-bold text-2xl py-7 rounded-2xl flex items-center justify-center gap-3">
+      <i class="fa-solid fa-rocket"></i>
+      OBTENER KEY
+    </button>
+
+    <div id="result" class="mt-8 min-h-[100px]"></div>
+  </div>
+
+  <script>
+    const WORKER_URL = "https://TU_WORKER_NAME.TU_USUARIO.workers.dev"; // ← CAMBIA ESTO por la URL de tu Worker
+
+    async function getKey() {
+      const link = document.getElementById('deltaLink').value.trim();
+      const result = document.getElementById('result');
+
+      if (!link) {
+        result.innerHTML = `<p class="text-red-400 text-center">❌ Pega un link válido</p>`;
+        return;
+      }
+
+      result.innerHTML = `<p class="text-emerald-400 text-center">🔄 Llamando al bypass...</p>`;
+
+      try {
+        const res = await fetch(`${WORKER_URL}?url=${encodeURIComponent(link)}`);
+        const data = await res.json();
+
+        if (data.success && data.final_url) {
+          result.innerHTML = `
+            <div class="bg-emerald-900/30 border border-emerald-400 rounded-2xl p-8 text-center">
+              <i class="fa-solid fa-circle-check text-6xl text-emerald-400 mb-4"></i>
+              <p class="text-2xl font-bold text-emerald-400 mb-4">✅ Key obtenida</p>
+              <code class="block bg-black/70 p-6 rounded-2xl text-emerald-300 break-all text-lg font-mono">${data.final_url}</code>
+              <button onclick="copyKey('${data.final_url}')" 
+                      class="mt-8 w-full bg-white text-black py-5 rounded-2xl font-bold text-xl">
+                📋 COPIAR KEY
+              </button>
+            </div>`;
+        } else {
+          result.innerHTML = `<p class="text-yellow-400 text-center">⚠️ ${data.message || 'Bypass falló'}<br>Prueba con applejr.net</p>`;
+        }
+      } catch (e) {
+        result.innerHTML = `<p class="text-red-400 text-center">Error al conectar con el Worker</p>`;
+      }
+    }
+
+    function copyKey(key) {
+      navigator.clipboard.writeText(key).then(() => {
+        alert("✅ Key copiada al portapapeles\nPégala en Delta Executor");
+      });
+    }
+  </script>
+</body>
+</html>
