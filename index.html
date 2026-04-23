@@ -5,47 +5,187 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi Delta Key • Bypass Directo</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          },
+          colors: {
+            night: '#07110f',
+            mint: '#73f5b1',
+            teal: '#23c483',
+            panel: '#0f1d19'
+          },
+          boxShadow: {
+            soft: '0 30px 80px rgba(0, 0, 0, 0.45)'
+          }
+        }
+      }
+    };
+  </script>
   <style>
-    body { background: linear-gradient(to bottom, #0a0a0a, #1a1a1a); }
-    .glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); }
+    :root {
+      color-scheme: dark;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(54, 208, 138, 0.22), transparent 30%),
+        radial-gradient(circle at top right, rgba(32, 140, 255, 0.18), transparent 24%),
+        linear-gradient(145deg, #06110d 0%, #091714 45%, #030706 100%);
+      min-height: 100vh;
+    }
+
+    .grid-overlay::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
+    }
+
+    .glass-panel {
+      background: linear-gradient(180deg, rgba(18, 31, 27, 0.9), rgba(8, 15, 13, 0.94));
+      backdrop-filter: blur(18px);
+    }
   </style>
 </head>
-<body class="min-h-screen text-white flex items-center justify-center p-4">
-  <div class="max-w-xl w-full glass rounded-3xl border border-white/10 shadow-2xl p-10">
-    <div class="flex items-center justify-center gap-3 mb-8">
-      <i class="fa-solid fa-key text-5xl text-emerald-400"></i>
-      <h1 class="text-4xl font-bold">Mi Delta Key</h1>
-    </div>
+<body class="grid-overlay text-white">
+  <main class="mx-auto flex min-h-screen w-full max-w-7xl items-center justify-center px-4 py-10 sm:px-6 lg:px-8">
+    <section class="glass-panel relative w-full max-w-5xl overflow-hidden rounded-[32px] border border-white/10 shadow-soft">
+      <div class="pointer-events-none absolute inset-0">
+        <div class="absolute -left-16 top-10 h-36 w-36 rounded-full bg-emerald-400/15 blur-3xl"></div>
+        <div class="absolute right-0 top-0 h-44 w-44 rounded-full bg-cyan-400/10 blur-3xl"></div>
+        <div class="absolute bottom-0 left-1/3 h-28 w-28 rounded-full bg-white/5 blur-2xl"></div>
+      </div>
 
-    <p class="text-center text-emerald-300 mb-8">Pega el link que te da Delta ("Receive Key")</p>
+      <div class="relative grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
+        <div class="border-b border-white/10 p-8 sm:p-10 lg:border-b-0 lg:border-r">
+          <div class="mb-8 inline-flex items-center gap-3 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-200">
+            <span class="inline-block h-2.5 w-2.5 rounded-full bg-emerald-300 shadow-[0_0_14px_rgba(52,211,153,0.9)]"></span>
+            Acceso directo a tu key
+          </div>
 
-    <input id="deltaLink" type="text" placeholder="https://auth.platorelay.com/..." 
-           class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-5 text-lg focus:outline-none focus:border-emerald-400 mb-6">
+          <div class="space-y-6">
+            <div class="flex items-center gap-4">
+              <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-300 to-teal text-3xl text-slate-950 shadow-lg shadow-emerald-900/30">
+                <i class="fa-solid fa-key"></i>
+              </div>
+              <div>
+                <p class="text-sm uppercase tracking-[0.24em] text-white/45">Delta Access</p>
+                <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Mi Delta Key</h1>
+              </div>
+            </div>
 
-    <button onclick="getKey()" 
-            class="w-full bg-emerald-500 hover:bg-emerald-600 text-black font-bold text-2xl py-7 rounded-2xl flex items-center justify-center gap-3">
-      <i class="fa-solid fa-rocket"></i>
-      OBTENER KEY
-    </button>
+            <p class="max-w-xl text-base leading-7 text-white/72 sm:text-lg">
+              Consigue fácilmente tu <span class="font-semibold text-emerald-200">"Key"</span> para Delta de forma rápida y segura.
+            </p>
+          </div>
 
-    <div id="result" class="mt-8 min-h-[100px]"></div>
-  </div>
+          <div class="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+            <article class="rounded-2xl border border-white/8 bg-white/[0.04] p-4">
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-200/70">Paso 1</p>
+              <p class="text-sm leading-6 text-white/75">Abre la aplicación Delta Executor.</p>
+            </article>
+            <article class="rounded-2xl border border-white/8 bg-white/[0.04] p-4">
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-200/70">Paso 2</p>
+              <p class="text-sm leading-6 text-white/75">Toca "Receive Key" para obtener tu enlace de Key de Delta.</p>
+            </article>
+            <article class="rounded-2xl border border-white/8 bg-white/[0.04] p-4">
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-200/70">Paso 3</p>
+              <p class="text-sm leading-6 text-white/75">Copia el enlace de la Key y pégalo en el cuadro de abajo.</p>
+            </article>
+            <article class="rounded-2xl border border-white/8 bg-white/[0.04] p-4">
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-200/70">Paso 4</p>
+              <p class="text-sm leading-6 text-white/75">Toca OBTENER KEY.</p>
+            </article>
+            <article class="rounded-2xl border border-white/8 bg-white/[0.04] p-4">
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-200/70">Paso 5</p>
+              <p class="text-sm leading-6 text-white/75">Copia la clave generada, vuelve a Delta Executor y pega la clave para continuar.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="p-8 sm:p-10">
+          <div class="rounded-[28px] border border-white/10 bg-black/20 p-5 sm:p-6">
+            <div class="mb-5 flex items-start justify-between gap-4">
+              <div>
+                <p class="text-sm font-semibold uppercase tracking-[0.22em] text-white/45">Formulario</p>
+                <h2 class="mt-2 text-2xl font-bold text-white">Pega tu link para continuar</h2>
+              </div>
+              <div class="hidden rounded-2xl border border-emerald-400/15 bg-emerald-400/10 px-3 py-2 text-sm text-emerald-200 sm:block">
+                Seguro y rápido
+              </div>
+            </div>
+
+            <label for="deltaLink" class="mb-3 block text-sm font-semibold text-white/80">
+              Enlace de Delta
+            </label>
+            <input
+              id="deltaLink"
+              type="text"
+              placeholder="https://auth.platorelay.com/..."
+              class="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-base text-white placeholder:text-white/30 focus:border-emerald-400 focus:outline-none focus:ring-4 focus:ring-emerald-400/15"
+            >
+
+            <p class="mt-3 text-sm leading-6 text-white/45">
+              Usa exactamente el link que te entrega Delta en el paso de validación.
+            </p>
+
+            <button
+              onclick="getKey()"
+              class="mt-6 flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-300 via-mint to-teal px-6 py-4 text-lg font-extrabold text-slate-950 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-emerald-500/20"
+            >
+              <i class="fa-solid fa-rocket"></i>
+              Obtener Key
+            </button>
+
+            <div class="mt-6 flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-sm text-white/55">
+              <i class="fa-solid fa-shield-halved text-emerald-300"></i>
+              El resultado aparecerá aquí mismo, listo para copiar.
+            </div>
+          </div>
+
+          <div id="result" class="mt-6 min-h-[140px] rounded-[28px] border border-dashed border-white/10 bg-white/[0.025] p-4 sm:p-5"></div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <script>
-    const WORKER_URL = "https://delta.david-um20001.workers.dev/"; // ← CAMBIA ESTO 
+    const WORKER_URL = "https://delta.david-um20001.workers.dev/";
 
     async function getKey() {
       const link = document.getElementById('deltaLink').value.trim();
       const result = document.getElementById('result');
 
-
       if (!link) {
-        result.innerHTML = `<p class="text-red-400 text-center">❌ Pega un link válido</p>`;
+        result.innerHTML = `
+          <div class="rounded-[24px] border border-red-400/20 bg-red-500/10 p-6 text-center">
+            <i class="fa-solid fa-circle-exclamation mb-3 text-3xl text-red-300"></i>
+            <p class="text-lg font-bold text-red-200">Pega un link válido</p>
+            <p class="mt-2 text-sm text-red-100/70">Necesito un enlace de Delta para continuar.</p>
+          </div>`;
         return;
       }
 
-      result.innerHTML = `<p class="text-emerald-400 text-center">🔄 Llamando al bypass...</p>`;
+      result.innerHTML = `
+        <div class="rounded-[24px] border border-emerald-400/20 bg-emerald-500/10 p-6 text-center">
+          <i class="fa-solid fa-spinner fa-spin mb-3 text-3xl text-emerald-300"></i>
+          <p class="text-lg font-bold text-emerald-200">Procesando enlace</p>
+          <p class="mt-2 text-sm text-emerald-100/70">Llamando al bypass, espera un momento...</p>
+        </div>`;
 
       try {
         const res = await fetch(`${WORKER_URL}?url=${encodeURIComponent(link)}`);
@@ -53,20 +193,46 @@
 
         if (data.success && data.final_url) {
           result.innerHTML = `
-            <div class="bg-emerald-900/30 border border-emerald-400 rounded-2xl p-8 text-center">
-              <i class="fa-solid fa-circle-check text-6xl text-emerald-400 mb-4"></i>
-              <p class="text-2xl font-bold text-emerald-400 mb-4">✅ Key obtenida</p>
-              <code class="block bg-black/70 p-6 rounded-2xl text-emerald-300 break-all text-lg font-mono">${data.final_url}</code>
-              <button onclick="copyKey('${data.final_url}')" 
-                      class="mt-8 w-full bg-white text-black py-5 rounded-2xl font-bold text-xl">
-                📋 COPIAR KEY
+            <div class="rounded-[24px] border border-emerald-400/25 bg-gradient-to-br from-emerald-500/10 to-cyan-400/10 p-6 sm:p-7">
+              <div class="mb-5 flex items-start gap-4">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-300 text-2xl text-slate-950">
+                  <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-200/75">Resultado</p>
+                  <h3 class="mt-1 text-2xl font-extrabold text-emerald-200">Key obtenida</h3>
+                  <p class="mt-2 text-sm text-white/60">Ya puedes copiarla y pegarla en Delta Executor.</p>
+                </div>
+              </div>
+
+              <div class="rounded-2xl border border-white/10 bg-black/35 p-4">
+                <p class="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/40">Key / URL final</p>
+                <code class="block break-all font-mono text-sm leading-7 text-emerald-200 sm:text-base">${data.final_url}</code>
+              </div>
+
+              <button
+                onclick="copyKey('${data.final_url}')"
+                class="mt-5 flex w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white px-5 py-4 text-base font-extrabold text-slate-950 transition duration-200 hover:bg-emerald-100"
+              >
+                <i class="fa-regular fa-copy"></i>
+                Copiar Key
               </button>
             </div>`;
         } else {
-          result.innerHTML = `<p class="text-yellow-400 text-center">⚠️ ${data.message || 'Bypass falló'}<br>Prueba con applejr.net</p>`;
+          result.innerHTML = `
+            <div class="rounded-[24px] border border-amber-400/20 bg-amber-500/10 p-6 text-center">
+              <i class="fa-solid fa-triangle-exclamation mb-3 text-3xl text-amber-300"></i>
+              <p class="text-lg font-bold text-amber-200">${data.message || 'Bypass falló'}</p>
+              <p class="mt-2 text-sm text-amber-100/70">Ingresa un link válido de Delta.</p>
+            </div>`;
         }
       } catch (e) {
-        result.innerHTML = `<p class="text-red-400 text-center">Error al conectar con el Worker</p>`;
+        result.innerHTML = `
+          <div class="rounded-[24px] border border-red-400/20 bg-red-500/10 p-6 text-center">
+            <i class="fa-solid fa-plug-circle-xmark mb-3 text-3xl text-red-300"></i>
+            <p class="text-lg font-bold text-red-200">Error al conectar con el Worker</p>
+            <p class="mt-2 text-sm text-red-100/70">Verifica la conexión o inténtalo de nuevo en unos segundos.</p>
+          </div>`;
       }
     }
 
@@ -76,13 +242,8 @@
       });
     }
   </script>
-  <!-- ... todo tu código anterior ... -->
 
-    <script src="https://pl29235025.profitablecpmratenetwork.com/11/02/a7/1102a7dd089ff322d742808820315f6b.js"></script>
+  <script src="https://pl29235025.profitablecpmratenetwork.com/11/02/a7/1102a7dd089ff322d742808820315f6b.js"></script>
   <script src="https://pl29235026.profitablecpmratenetwork.com/32/d8/12/32d8123092ab764ea66981ff5babd139.js"></script>
-
-
-</body>
-</html>
 </body>
 </html>
